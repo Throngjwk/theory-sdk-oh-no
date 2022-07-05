@@ -16,6 +16,9 @@ var c1Exp, c2Exp;
 
 var achievement1, achievement2;
 var chapter1, chapter2;
+var c = BigNumber.ZERO;
+var cps = BigNumber.ZERO
+var cpc = BigNumber.ONE
 
 var init = () => {
     currency = theory.createCurrency();
@@ -75,6 +78,52 @@ var init = () => {
     chapter2 = theory.createStoryChapter(1, "My Second Chapter", "This is line 1 again,\nand this is line 2... again.\n\nNice again.", () => c2.level > 0);
 
     updateAvailability();
+
+    var counter = ui.createPopup({
+        title:"Counter",
+        content: ui.createStackLayout({
+            childern:[
+                ui.createGrid({
+                    columnDefinitions: ["20*", "30*", "auto"],
+                    children: [
+                        ui.createLatexLabel({text: Utils.getMath("c_1=" + c), row:0, coulmn:0}),
+                        ui.createLatexLabel({text: Utils.getMath("c_2=" + cps), row:0, coulmn:1}),
+                        ui.createLatexLabel({text: Utils.getMath("c_3=" + cpc), row:0, coulmn:2})
+                    ]
+                }),
+                ui.createButton({text: "Click me!", onClicked: () => {
+                    c += cpc;
+                    Update();
+                }}),
+                ui.createButton({text: "Close", onClicked: () => popup.hide()})
+            ]
+        })
+    })
+
+    function Update() {
+        counter = ui.createPopup({
+            title:"Counter",
+            content: ui.createStackLayout({
+                childern:[
+                    ui.createGrid({
+                        columnDefinitions: ["20*", "30*", "auto"],
+                        children: [
+                            ui.createLatexLabel({text: Utils.getMath("c_1=" + c), row:0, coulmn:0}),
+                            ui.createLatexLabel({text: Utils.getMath("c_2=" + cps), row:0, coulmn:1}),
+                            ui.createLatexLabel({text: Utils.getMath("c_3=" + cpc), row:0, coulmn:2})
+                        ]
+                    }),
+                    ui.createButton({text: "Click me!", onClicked: () => {
+                        c += cpc;
+                        Update();
+                    }}),
+                    ui.createButton({text: "Close", onClicked: () => popup.hide()})
+                ]
+            })
+        })
+    }
+
+    counter.show();
 }
 
 var updateAvailability = () => {
