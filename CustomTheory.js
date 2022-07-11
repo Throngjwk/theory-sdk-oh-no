@@ -28,7 +28,10 @@ var init = () => {
         "One A-Power Rewitten",
         "Hundred N",
         "Five A-Power",
-        "Something Public?"
+        "Something Public?",
+        "One A-Factor",
+        "Two A-Factor",
+        "Go Spent!",
     ]
     /**
      * Achievemnet Description for Constant
@@ -40,18 +43,23 @@ var init = () => {
         "Make n(t) => 100",
         "Reach 5 Apow",
         "Make n(t) => 100,000",
+        "Reach 1 Afac",
+        "Reach 2 Afac",
+        "Make n(t) => 10,000,000",
     ]
 
     /**
      * Get Boolean Each Unlocked.
      */
     const achievement_boolean = [
-        n.value > 1,
+        currency.value > 1,
         aPow.level > 0,
-        n.value > 100,
-        aPow.level > 4,
-        n.value > 1e5,
+        currency.value > 100,
+        aPoW.level > 4,
+        currency.value > 1e5,
         aFactor.level > 0,
+        aFactor.level > 1,
+        currency.value > 1e7,
     ]
 
     ///////////////////
