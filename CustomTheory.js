@@ -135,7 +135,7 @@ var tick = (elapsedTime, multiplier) => {
     let dt = BigNumber.from(elapsedTime * multiplier);
     let bonus = theory.publicationMultiplier;
     currency2.value += dt
-    currency.value += dt * bonus * currency2.value * getAPow(aPow.level).pow(2) * getAFac(aFactor.level)
+    currency.value += dt * bonus * currency2.value.pow(getTExponent(tLol.level)) * getAPow(aPow.level).pow(2) * getAFac(aFactor.level)
 }
 
 var getPrimaryEquation = () => {
@@ -158,5 +158,6 @@ var get2DGraphValue = () => currency.value.sign * (BigNumber.ONE + currency.valu
 
 var getAPow = (level) => BigNumber.from(level)
 var getAFac = (level) => BigNumber.from(1 + 2 * level)
+var getTExponent = (level) => BigNumber.from(1 + level)
 
 init();
