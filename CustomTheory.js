@@ -77,6 +77,14 @@ var init = () => {
         aFactor2.getInfo = (amount) => Utils.getMathTo(getDesc(aFactor2.level), getDesc(aFactor2.level + amount));
     }
 
+    // bPow
+    {
+        let getDesc = (level) => "B_1=" + getBPow(level).toString(0);
+        bPow = theory.createUpgrade(0, currency, new FirstFreeCost(new ExponentialCost(1e20, Math.log2(32768))));
+        bPow.getDescription = (_) => Utils.getMath(getDesc(bPow.level));
+        bPow.getInfo = (amount) => Utils.getMathTo(getDesc(bPow.level), getDesc(bPow.level + amount));
+    }
+
     /////////////////////
     // Permanent Upgrades
     theory.createPublicationUpgrade(0, currency, 1e5);
@@ -141,6 +149,16 @@ var init = () => {
         };
     }
 
+    {
+        bPowTerm = theory.createMilestoneUpgrade(4, 1);
+        bPowTerm.description = "Unlock new term for $B_1$";
+        bPowTerm.info = "Unlock new term for $B_1$";
+        bPowTerm.boughtOrRefunded = (_) => {
+            updateAvailability();
+             theory.invalidatePrimaryEquation();
+        };
+    }
+
     /////////////////
     //// Achievements
     //All 7 Achievements
@@ -158,14 +176,16 @@ var updateAvailability = () => {
     aFactor.isAvailable = aFacTerm.level > 0
     tLol.isAvailable = aFacTerm.level > 0
     aFacTerm2.isAvailable = tLol.level > 0
-    aFactor2.isAvailable = aFacTerm2 > 0
+    aFactor2.isAvailable = aFacTerm2.level > 0
+    bPowTerm.isAvailable = aFacTerm2.level > 0
+    bPow.isAvailable = bPowTerm.level > 0
 }
 
 var tick = (elapsedTime, multiplier) => {
     let dt = BigNumber.from(elapsedTime * multiplier);
     let bonus = theory.publicationMultiplier;
     currency2.value += dt
-    currency.value += dt * bonus * currency2.value.pow(getTExponent(tLol.level)) * getAPow(aPow.level).pow(2) * getAFac(aFactor.level).pow(getA2Exponent(a2Exp.level)) * getAFac2(aFactor2.level)
+    currency.value += dt * bonus * currency2.value.pow(getTExponent(tLol.level)) * getAPow(aPow.level).pow(2) * getAFac(aFactor.level).pow(getA2Exponent(a2Exp.level)) * getAFac2(aFactor2.level) * BigNumber.THREE.pow(getBPow(bPow.level))
 }
 
 var getPrimaryEquation = () => {
@@ -181,6 +201,8 @@ var getPrimaryEquation = () => {
 
     if (aFacTerm2.level == 1) result += " \\times A_3";
 
+    if (bPowTerm.level == 1) result += " \\times 3^{B_1}";
+
     return result;
 }
 
@@ -193,7 +215,9 @@ var get2DGraphValue = () => currency.value.sign * (BigNumber.ONE + currency.valu
 var getAPow = (level) => BigNumber.from(level)
 var getAFac = (level) => BigNumber.from(1 + 2 * level)
 var getAFac2 = (level) => BigNumber.from(1 + 2 * level)
+var getBPow = (level) => BigNumber.from(level)
 var getTExponent = (level) => BigNumber.from(1 + level)
 var getA2Exponent = (level) => BigNumber.from(1 + 0.2 * level)
+
 
 init();
