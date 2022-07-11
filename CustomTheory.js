@@ -18,7 +18,7 @@ var init = () => {
     currency = theory.createCurrency("n", "n");
     currency2 = theory.createCurrency("t", "t");
 
-    var achievements = new Array(5)
+    var achievements = new Array(7)
 
     /**
      * Achievement Name Get to names.
@@ -89,13 +89,23 @@ var init = () => {
 
     ///////////////////////
     //// Milestone Upgrades
-    theory.setMilestoneCost(new LinearCost(25, 25));
+    theory.setMilestoneCost(new LinearCost(2, 1));
     
+    {
+        aFacTerm = theory.createMilestoneUpgrade(0, 1);
+        aFacTerm.description = "Unlock new term for $A_2$";
+        aFacTerm.info = "Unlock new term for $A_2$";
+        aFacTerm.boughtOrRefunded = (_) => {
+            updateAvailability();
+             theory.invalidatePrimaryEquation();
+        };
+    }
+
     /////////////////
     //// Achievements
-    //All 
-    for (let i = 0; i < 5; i++) {
-        achievements[i] = theory.createAchievement(i, achievement_name, achievement_description, () => c1.level > 1)
+    //All 7 Achievements
+    for (let i = 0; i < 7; i++) {
+        achievements[i] = theory.createAchievement(i, achievement_name[i], achievement_description[i], () => achievement_boolean[i])
     }
 
     ///////////////////
@@ -112,24 +122,26 @@ var tick = (elapsedTime, multiplier) => {
     let dt = BigNumber.from(elapsedTime * multiplier);
     let bonus = theory.publicationMultiplier;
     currency2.value += dt
-    currency.value += dt * bonus * currency2.value * getAPow(aPow.level).pow(2)
+    currency.value += dt * bonus * currency2.value * getAPow(aPow.level).pow(2) * getAFac(aFactor.level)
 }
 
 var getPrimaryEquation = () => {
     let result = "\\dot{\\rho} = t";
 
-    result += " \\times A^2";
+    result += " \\times A_1^2";
+
+    if (aFacTerm.level == 1) result += " \\times A_2";
 
     return result;
 }
 
-var getSecondaryEquation = () => theory.latexSymbol + "=\\max\\rho";
-var getPublicationMultiplier = (tau) => tau.pow(0.521) / BigNumber.THREE.sqrt();
-var getPublicationMultiplierFormula = (symbol) => "\\frac{{" + symbol + "}^{0.521}}{\\sqrt{3}}";
+var getSecondaryEquation = () => theory.latexSymbol + "=\\max\\rho^{0.4}";
+var getPublicationMultiplier = (tau) => tau.pow(0.521) / BigNumber.from(25).sqrt();
+var getPublicationMultiplierFormula = (symbol) => "\\frac{{" + symbol + "}^{0.521}}{\\sqrt{25}}";
 var getTau = () => currency.value.pow(0.4);
 var get2DGraphValue = () => currency.value.sign * (BigNumber.ONE + currency.value.abs()).log10().toNumber();
 
 var getAPow = (level) => BigNumber.from(level)
-var getAFac = (level) => BigNumber.from(2 * level)
+var getAFac = (level) => BigNumber.from(1 + 2 * level)
 
 init();
