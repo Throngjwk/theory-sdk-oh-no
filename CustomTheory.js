@@ -130,5 +130,6 @@ var getTau = () => currency.value.pow(0.4);
 var get2DGraphValue = () => currency.value.sign * (BigNumber.ONE + currency.value.abs()).log10().toNumber();
 
 var getAPow = (level) => BigNumber.from(level)
+var getAFac = (level) => BigNumber.from(level)
 
 init();
