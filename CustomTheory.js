@@ -48,19 +48,7 @@ var init = () => {
         "Make n(t) => 10,000,000",
     ]
 
-    /**
-     * Get Boolean Each Unlocked.
-     */
-    const achievement_boolean = [
-        currency.value > 1,
-        aPow.level > 0,
-        currency.value > 100,
-        aPoW.level > 4,
-        currency.value > 1e5,
-        aFactor.level > 0,
-        aFactor.level > 1,
-        currency.value > 1e7,
-    ]
+    
 
     ///////////////////
     // Regular Upgrades
@@ -87,6 +75,20 @@ var init = () => {
     theory.createBuyAllUpgrade(1, currency, 1e10);
     theory.createAutoBuyerUpgrade(2, currency, 1e20);
 
+    //Achievements Booleans
+     /**
+     * Get Boolean Each Unlocked.
+     */
+    const achievement_boolean = [
+        currency.value > 1,
+        aPow.level > 0,
+        currency.value > 100,
+        aPoW.level > 4,
+        currency.value > 1e5,
+        aFactor.level > 0,
+        aFactor.level > 1,
+        currency.value > 1e7,
+    ]
     ///////////////////////
     //// Milestone Upgrades
     theory.setMilestoneCost(new LinearCost(2, 1));
