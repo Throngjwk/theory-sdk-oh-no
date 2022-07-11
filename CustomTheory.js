@@ -4,21 +4,34 @@ import { BigNumber } from "./api/BigNumber";
 import { theory } from "./api/Theory";
 import { Utils } from "./api/Utils";
 
-var id = "my_custom_theory_id";
-var name = "My Custom Theory";
-var description = "A basic theory.";
-var authors = "Gilles-Philippe Paillé";
-var version = 1;
+var id = "math";
+var name = "The Math!";
+var description = "Nice math latex.";
+var authors = "Throngjwk";
+var version = "1.0.0";
 
 var currency;
-var c1, c2;
-var c1Exp, c2Exp;
+var aPow;
 
-var achievement1, achievement2;
-var chapter1, chapter2;
 
 var init = () => {
-    currency = theory.createCurrency();
+    currency = theory.createCurrency("n", "n");
+
+    const achievement_name = [
+        "You Played!",
+        "One A-Power Rewitten",
+        "Hundred N",
+        "Five A-Power",
+        "Something Public?"
+    ]
+
+    const achievement_description = [
+        "Make n(t) => 1",
+        "Reach 1 Apow",
+        "Make n(t) => 100",
+        "Reach 5 Apow",
+        "Make n(t) => 100,000",
+    ]
 
     ///////////////////
     // Regular Upgrades
