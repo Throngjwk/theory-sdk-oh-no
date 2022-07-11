@@ -103,6 +103,16 @@ var init = () => {
         };
     }
 
+    {
+        tLol = theory.createMilestoneUpgrade(1, 1);
+        tLol.description = Localization.getUpgradeIncCustomExpDesc("t", "1");
+        tLol.info = Localization.getUpgradeIncCustomExpInfo("t", "1");
+        tLol.boughtOrRefunded = (_) => {
+            updateAvailability();
+             theory.invalidatePrimaryEquation();
+        };
+    }
+
     /////////////////
     //// Achievements
     //All 7 Achievements
@@ -118,6 +128,7 @@ var init = () => {
 
 var updateAvailability = () => {
     aFactor.isAvailable = aFacTerm.level > 0
+    tLol.isAvailable = aFacTerm.level > 0
 }
 
 var tick = (elapsedTime, multiplier) => {
@@ -129,6 +140,8 @@ var tick = (elapsedTime, multiplier) => {
 
 var getPrimaryEquation = () => {
     let result = "\\dot{\\rho} = t";
+
+    if (tLol.level == 1) result += "^2";
 
     result += " \\times A_1^2";
 
