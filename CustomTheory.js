@@ -18,6 +18,11 @@ var init = () => {
     currency = theory.createCurrency("n", "n");
     currency2 = theory.createCurrency("t", "t");
 
+    var achievements = new Array(5)
+
+    /**
+     * Achievement Name Get to names.
+     */
     const achievement_name = [
         "You Played!",
         "One A-Power Rewitten",
@@ -25,6 +30,9 @@ var init = () => {
         "Five A-Power",
         "Something Public?"
     ]
+    /**
+     * Achievemnet Description for Constant
+     */
 
     const achievement_description = [
         "Make n(t) => 1",
@@ -34,15 +42,35 @@ var init = () => {
         "Make n(t) => 100,000",
     ]
 
+    /**
+     * Get Boolean Each Unlocked.
+     */
+    const achievement_boolean = [
+        n.value > 1,
+        aPow.level > 0,
+        n.value > 100,
+        aPow.level > 4,
+        n.value > 1e5,
+        aFactor.level > 0,
+    ]
+
     ///////////////////
     // Regular Upgrades
 
     // aPow
     {
-        let getDesc = (level) => "A=" + getA(level).toString(0);
-        aPow = theory.createUpgrade(0, currency, new FirstFreeCost(new ExponentialCost(15, Math.log2(2))));
+        let getDesc = (level) => "A_1=" + getAPow(level).toString(0);
+        aPow = theory.createUpgrade(0, currency, new FirstFreeCost(new ExponentialCost(15, Math.log2(2.75))));
         aPow.getDescription = (_) => Utils.getMath(getDesc(aPow.level));
         aPow.getInfo = (amount) => Utils.getMathTo(getDesc(aPow.level), getDesc(aPow.level + amount));
+    }
+
+    // aFactor
+    {
+        let getDesc = (level) => "A_2=" + getAFac(level).toString(0);
+        aFactor = theory.createUpgrade(1, currency, new FirstFreeCost(new ExponentialCost(1e5, Math.log2(10))));
+        aFactor.getDescription = (_) => Utils.getMath(getDesc(aFactor.level));
+        aFactor.getInfo = (amount) => Utils.getMathTo(getDesc(aFactor.level), getDesc(aFactor.level + amount));
     }
 
     /////////////////////
@@ -57,13 +85,13 @@ var init = () => {
     
     /////////////////
     //// Achievements
-    achievement1 = theory.createAchievement(0, "Achievement 1", "Description 1", () => c1.level > 1);
-    achievement2 = theory.createSecretAchievement(1, "Achievement 2", "Description 2", "Maybe you should buy two levels of c2?", () => c2.level > 1);
+    //All 
+    for (let i = 0; i < 5; i++) {
+        achievements[i] = theory.createAchievement(i, achievement_name, achievement_description, () => c1.level > 1)
+    }
 
     ///////////////////
     //// Story chapters
-    chapter1 = theory.createStoryChapter(0, "My First Chapter", "This is line 1,\nand this is line 2.\n\nNice.", () => c1.level > 0);
-    chapter2 = theory.createStoryChapter(1, "My Second Chapter", "This is line 1 again,\nand this is line 2... again.\n\nNice again.", () => c2.level > 0);
 
     updateAvailability();
 }
@@ -75,34 +103,24 @@ var updateAvailability = () => {
 var tick = (elapsedTime, multiplier) => {
     let dt = BigNumber.from(elapsedTime * multiplier);
     let bonus = theory.publicationMultiplier;
+    currency2.value += dt
     currency.value += dt * bonus * currency2.value * getAPow(aPow.level).pow(2)
 }
 
 var getPrimaryEquation = () => {
-    let result = "\\dot{\\rho} = c_1";
+    let result = "\\dot{\\rho} = t";
 
-    if (c1Exp.level == 1) result += "^{1.05}";
-    if (c1Exp.level == 2) result += "^{1.1}";
-    if (c1Exp.level == 3) result += "^{1.15}";
-
-    result += "c_2";
-
-    if (c2Exp.level == 1) result += "^{1.05}";
-    if (c2Exp.level == 2) result += "^{1.1}";
-    if (c2Exp.level == 3) result += "^{1.15}";
+    result += " \\times A^2";
 
     return result;
 }
 
 var getSecondaryEquation = () => theory.latexSymbol + "=\\max\\rho";
-var getPublicationMultiplier = (tau) => tau.pow(0.164) / BigNumber.THREE;
-var getPublicationMultiplierFormula = (symbol) => "\\frac{{" + symbol + "}^{0.164}}{3}";
-var getTau = () => currency.value;
+var getPublicationMultiplier = (tau) => tau.pow(0.521) / BigNumber.THREE.sqrt();
+var getPublicationMultiplierFormula = (symbol) => "\\frac{{" + symbol + "}^{0.521}}{\\sqrt{3}}";
+var getTau = () => currency.value.pow(0.4);
 var get2DGraphValue = () => currency.value.sign * (BigNumber.ONE + currency.value.abs()).log10().toNumber();
 
-var getC1 = (level) => Utils.getStepwisePowerSum(level, 2, 10, 0);
-var getC2 = (level) => BigNumber.TWO.pow(level);
-var getC1Exponent = (level) => BigNumber.from(1 + 0.05 * level);
-var getC2Exponent = (level) => BigNumber.from(1 + 0.05 * level);
+var getAPow = (level) => BigNumber.from(level)
 
 init();
