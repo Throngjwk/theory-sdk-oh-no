@@ -83,7 +83,7 @@ var init = () => {
         currency.value > 1,
         aPow.level > 0,
         currency.value > 100,
-        aPoW.level > 4,
+        aPow.level > 4,
         currency.value > 1e5,
         aFactor.level > 0,
         aFactor.level > 1,
@@ -117,7 +117,7 @@ var init = () => {
 }
 
 var updateAvailability = () => {
-    //cool
+    aFactor.isAvailable = aFacTerm.level > 0
 }
 
 var tick = (elapsedTime, multiplier) => {
