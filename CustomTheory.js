@@ -158,6 +158,7 @@ var updateAvailability = () => {
     aFactor.isAvailable = aFacTerm.level > 0
     tLol.isAvailable = aFacTerm.level > 0
     aFacTerm2.isAvailable = tLol.level > 0
+    aFactor2.isAvailable = aFacTerm2 > 0
 }
 
 var tick = (elapsedTime, multiplier) => {
