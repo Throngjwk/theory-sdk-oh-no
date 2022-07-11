@@ -10,12 +10,13 @@ var description = "Nice math latex.";
 var authors = "Throngjwk";
 var version = "1.0.0";
 
-var currency;
+var currency, currency2;
 var aPow;
 
 
 var init = () => {
     currency = theory.createCurrency("n", "n");
+    currency2 = theory.createCurrency("t", "t");
 
     const achievement_name = [
         "You Played!",
@@ -36,46 +37,23 @@ var init = () => {
     ///////////////////
     // Regular Upgrades
 
-    // c1
+    // aPow
     {
-        let getDesc = (level) => "c_1=" + getC1(level).toString(0);
-        c1 = theory.createUpgrade(0, currency, new FirstFreeCost(new ExponentialCost(15, Math.log2(2))));
-        c1.getDescription = (_) => Utils.getMath(getDesc(c1.level));
-        c1.getInfo = (amount) => Utils.getMathTo(getDesc(c1.level), getDesc(c1.level + amount));
-    }
-
-    // c2
-    {
-        let getDesc = (level) => "c_2=2^{" + level + "}";
-        let getInfo = (level) => "c_2=" + getC2(level).toString(0);
-        c2 = theory.createUpgrade(1, currency, new ExponentialCost(5, Math.log2(10)));
-        c2.getDescription = (_) => Utils.getMath(getDesc(c2.level));
-        c2.getInfo = (amount) => Utils.getMathTo(getInfo(c2.level), getInfo(c2.level + amount));
+        let getDesc = (level) => "A=" + getA(level).toString(0);
+        aPow = theory.createUpgrade(0, currency, new FirstFreeCost(new ExponentialCost(15, Math.log2(2))));
+        aPow.getDescription = (_) => Utils.getMath(getDesc(aPow.level));
+        aPow.getInfo = (amount) => Utils.getMathTo(getDesc(aPow.level), getDesc(aPow.level + amount));
     }
 
     /////////////////////
     // Permanent Upgrades
-    theory.createPublicationUpgrade(0, currency, 1e10);
-    theory.createBuyAllUpgrade(1, currency, 1e13);
-    theory.createAutoBuyerUpgrade(2, currency, 1e30);
+    theory.createPublicationUpgrade(0, currency, 1e5);
+    theory.createBuyAllUpgrade(1, currency, 1e10);
+    theory.createAutoBuyerUpgrade(2, currency, 1e20);
 
     ///////////////////////
     //// Milestone Upgrades
     theory.setMilestoneCost(new LinearCost(25, 25));
-
-    {
-        c1Exp = theory.createMilestoneUpgrade(0, 3);
-        c1Exp.description = Localization.getUpgradeIncCustomExpDesc("c_1", "0.05");
-        c1Exp.info = Localization.getUpgradeIncCustomExpInfo("c_1", "0.05");
-        c1Exp.boughtOrRefunded = (_) => theory.invalidatePrimaryEquation();
-    }
-
-    {
-        c2Exp = theory.createMilestoneUpgrade(1, 3);
-        c2Exp.description = Localization.getUpgradeIncCustomExpDesc("c_2", "0.05");
-        c2Exp.info = Localization.getUpgradeIncCustomExpInfo("c_2", "0.05");
-        c2Exp.boughtOrRefunded = (_) => theory.invalidatePrimaryEquation();
-    }
     
     /////////////////
     //// Achievements
@@ -91,14 +69,13 @@ var init = () => {
 }
 
 var updateAvailability = () => {
-    c2Exp.isAvailable = c1Exp.level > 0;
+    //cool
 }
 
 var tick = (elapsedTime, multiplier) => {
     let dt = BigNumber.from(elapsedTime * multiplier);
     let bonus = theory.publicationMultiplier;
-    currency.value += dt * bonus * getC1(c1.level).pow(getC1Exponent(c1Exp.level)) *
-                                   getC2(c2.level).pow(getC2Exponent(c2Exp.level));
+    currency.value += dt * bonus * currency2.value * getAPow(aPow.level).pow(2)
 }
 
 var getPrimaryEquation = () => {
