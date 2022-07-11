@@ -69,6 +69,14 @@ var init = () => {
         aFactor.getInfo = (amount) => Utils.getMathTo(getDesc(aFactor.level), getDesc(aFactor.level + amount));
     }
 
+    // aFactor2
+    {
+        let getDesc = (level) => "A_3=" + getAFac2(level).toString(0);
+        aFactor2 = theory.createUpgrade(2, currency, new FirstFreeCost(new ExponentialCost(1e12, Math.log2(20))));
+        aFactor2.getDescription = (_) => Utils.getMath(getDesc(aFactor2.level));
+        aFactor2.getInfo = (amount) => Utils.getMathTo(getDesc(aFactor2.level), getDesc(aFactor2.level + amount));
+    }
+
     /////////////////////
     // Permanent Upgrades
     theory.createPublicationUpgrade(0, currency, 1e5);
@@ -113,6 +121,26 @@ var init = () => {
         };
     }
 
+    {
+        aFacTerm2 = theory.createMilestoneUpgrade(2, 1);
+        aFacTerm2.description = "Unlock new term for $A_3$";
+        aFacTerm2.info = "Unlock new term for $A_3$";
+        aFacTerm.boughtOrRefunded = (_) => {
+            updateAvailability();
+             theory.invalidatePrimaryEquation();
+        };
+    }
+
+    {
+        a2Exp = theory.createMilestoneUpgrade(3, 1);
+        a2Exp.description = Localization.getUpgradeIncCustomExpDesc("A_2", "0.2");
+        a2Exp.info = Localization.getUpgradeIncCustomExpInfo("A_2", "0.2");
+        a2Exp.boughtOrRefunded = (_) => {
+            updateAvailability();
+             theory.invalidatePrimaryEquation();
+        };
+    }
+
     /////////////////
     //// Achievements
     //All 7 Achievements
@@ -129,13 +157,14 @@ var init = () => {
 var updateAvailability = () => {
     aFactor.isAvailable = aFacTerm.level > 0
     tLol.isAvailable = aFacTerm.level > 0
+    aFacTerm2.isAvailable = tLol.level > 0
 }
 
 var tick = (elapsedTime, multiplier) => {
     let dt = BigNumber.from(elapsedTime * multiplier);
     let bonus = theory.publicationMultiplier;
     currency2.value += dt
-    currency.value += dt * bonus * currency2.value.pow(getTExponent(tLol.level)) * getAPow(aPow.level).pow(2) * getAFac(aFactor.level)
+    currency.value += dt * bonus * currency2.value.pow(getTExponent(tLol.level)) * getAPow(aPow.level).pow(2) * getAFac(aFactor.level).pow(getA2Exponent(a2Exp.level)) * getAFac2(aFactor2.level)
 }
 
 var getPrimaryEquation = () => {
@@ -146,6 +175,10 @@ var getPrimaryEquation = () => {
     result += " \\times A_1^2";
 
     if (aFacTerm.level == 1) result += " \\times A_2";
+
+    if (a2Exp.level == 1) result += "^{1.2}";
+
+    if (aFacTerm2.level == 1) result += " \\times A_3";
 
     return result;
 }
@@ -158,6 +191,8 @@ var get2DGraphValue = () => currency.value.sign * (BigNumber.ONE + currency.valu
 
 var getAPow = (level) => BigNumber.from(level)
 var getAFac = (level) => BigNumber.from(1 + 2 * level)
+var getAFac2 = (level) => BigNumber.from(1 + 2 * level)
 var getTExponent = (level) => BigNumber.from(1 + level)
+var getA2Exponent = (level) => BigNumber.from(1 + 0.2 * level)
 
 init();
