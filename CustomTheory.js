@@ -91,7 +91,7 @@ var init = () => {
         battery.getDescription = (_) => "Open Battery Menu";
         battery.getInfo = (amount) => "Open Battery Menu";
         battery.boughtOrRefunded = (_) => {
-            psPUP.show();
+            popup.show();
             battery.level = 0;
         }
     }
@@ -220,7 +220,7 @@ var init = () => {
     let basicLockedAva1 = bPow.level > 4
 
     let basicEffect1 = () => {
-        if (basicLockedAva) {
+        if (basicLockedAva1) {
             return getAPow(aPow.level) * 2
         } else {
             return BigNumber.ONE
@@ -228,7 +228,61 @@ var init = () => {
     }
 
     let basicLocked1 = () => {
-        if (basicLockedAva) {
+        if (basicLockedAva1) {
+            return "Unlocked"
+        } else {
+            return "Locked"
+        }
+    }
+
+    let basicLockedAva2 = bPow.level > 4
+
+    let basicLockedAva3 = bPow.level > 5
+
+    let basicLockedAva4 = bPow.level > 7
+
+    let basicEffect2 = () => {
+        if (basicLockedAva2) {
+            return getAFac(aFactor.level) * 2
+        } else {
+            return BigNumber.ONE
+        }
+    }
+
+    let basicEffect3 = () => {
+        if (basicLockedAva2) {
+            return getAFac(aFactor.level) * 2
+        } else {
+            return BigNumber.ONE
+        }
+    }
+
+    let basicEffect4 = () => {
+        if (basicLockedAva1) {
+            return getAPow(aPow.level) * 2
+        } else {
+            return BigNumber.ONE
+        }
+    }
+
+    let basicLocked2 = () => {
+        if (basicLockedAva2) {
+            return "Unlocked"
+        } else {
+            return "Locked"
+        }
+    }
+
+    let basicLocked3 = () => {
+        if (basicLockedAva3) {
+            return "Unlocked"
+        } else {
+            return "Locked"
+        }
+    }
+
+    let basicLocked4 = () => {
+        if (basicLockedAva4) {
             return "Unlocked"
         } else {
             return "Locked"
