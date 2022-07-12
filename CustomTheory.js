@@ -467,6 +467,66 @@ var init = () => {
             ]
         })
     });
+
+    var popup2 = ui.createPopup({
+        title: "Stats",
+        content: ui.createStackLayout({
+            children: [
+                ui.createLabel({text: "You Have " + game.f + " f(t)!"}),
+                ui.createLabel({text: "You Have " + game.dt + " dt!"}),
+                ui.createLabel({text: "You Have " + game.db + " db!"}),
+                ui.createButton({text: "Close", onClicked: () => popup.hide()})
+            ]
+        })
+    });
+
+    var popup3 = ui.createPopup({
+        title: "Idk Popup",
+        content: ui.createStackLayout({
+            children: [
+                ui.createButton({text: "My Button", horizontalOptions: LayoutOptions.START}),
+                ui.createCheckBox(),
+                ui.createEntry(),
+                ui.createFrame({
+                    heightRequest: 50,
+                    cornerRadius: 10,
+                    content: ui.createLabel({
+                        text: "A frame.",
+                        horizontalOptions: LayoutOptions.CENTER,
+                        verticalOptions: LayoutOptions.CENTER
+                    })
+                }),
+                ui.createGrid({
+                    columnDefinitions: ["20*", "30*", "auto"],
+                    children: [
+                        ui.createButton({text: "left", row: 0, column: 0}),
+                        ui.createButton({text: "center", row: 0, column: 1}),
+                        ui.createButton({text: "right", row: 0, column: 2, padding: new Thickness(0)})
+                    ]
+                }),
+                ui.createImage({source: ImageSource.ACCELERATE}),
+                ui.createLabel({text: "My label."}),
+                ui.createLatexLabel({text: "My LaTeX label. \\(\\int_0^1{xdx}\\)"}),
+                ui.createProgressBar({progress: 0.25}),
+                ui.createSwitch(),
+                ui.createBox({heightRequest: 1, margin: new Thickness(0, 10)}),
+                ui.createButton({text: "Close", onClicked: () => popup.hide()})
+            ]
+        })
+    });
+
+    var popup4 = ui.createPopup({
+        title: "My Popup",
+        content: ui.createStackLayout({
+            children: [
+                ui.createImage({source: ImageSource.ACCELERATE}),
+                ui.createLabel({text: "My Acclearting this!"}),
+                ui.createButton({text: "Close", onClicked: () => popup.hide()})
+            ]
+        })
+    });
+    
+    
 }
 
 var updateAvailability = () => {
