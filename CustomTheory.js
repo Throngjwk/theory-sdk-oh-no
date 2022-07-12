@@ -383,16 +383,6 @@ var init = () => {
                     })
                 }),
                 ui.createLabel({text: "I showse batteries now."}),
-                ui.createGrid({
-                    columnDefinitions: ["15*", "30*"],
-                    rowDefinitions: ["auto"],
-                    children: [
-                        createButtonSpecial("Battery 1", 0, 0, battery1.show(), true),
-                        createButtonSpecial("Battery 2", 1, 0, battery2.show(), true),
-                        createButtonSpecial("Battery 3", 0, 1, battery3.show(), true),
-                        createButtonSpecial("Battery 4", 1, 1, battery4.show(), true),
-                    ]
-                }),
                 ui.createButton({text: "Close", onClicked: () => popup.hide()})
             ]
         })
