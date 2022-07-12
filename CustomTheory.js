@@ -169,6 +169,16 @@ var init = () => {
         };
     }
 
+    {
+        batteryUnlocked = theory.createMilestoneUpgrade(6, 1);
+        batteryUnlocked.description = "Unlock Batteries From B-Power";
+        batteryUnlocked.info = "Unlock Batteries From B-Power";
+        batteryUnlocked.boughtOrRefunded = (_) => {
+            updateAvailability();
+             theory.invalidatePrimaryEquation();
+        };
+    }
+
     /////////////////
     //// Achievements
     //All 7 Achievements
