@@ -370,7 +370,7 @@ var init = () => {
     });
 
     var popup = ui.createPopup({
-        title: "My Popup",
+        title: "Batteries",
         content: ui.createStackLayout({
             children: [
                 ui.createFrame({
