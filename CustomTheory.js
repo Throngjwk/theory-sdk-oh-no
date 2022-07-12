@@ -201,6 +201,148 @@ var init = () => {
     //// Story chapters
 
     updateAvailability();
+
+    //POPUPS
+
+    function createButtonSpecial(name, column, row, clicked, isUnlocked) {
+        ui.createButton({
+            text: name,
+            row: row,
+            column: column,
+            onClicked:() => {
+                if (isUnlocked) {
+                    clicked
+                }
+            }
+        })
+    }
+
+    let basicLockedAva1 = bPow.level > 4
+
+    let basicEffect1 = () => {
+        if (basicLockedAva) {
+            return getAPow(aPow.level) * 2
+        } else {
+            return BigNumber.ONE
+        }
+    }
+
+    let basicLocked1 = () => {
+        if (basicLockedAva) {
+            return "Unlocked"
+        } else {
+            return "Locked"
+        }
+    }
+
+    var popup = ui.createPopup({
+        title: "My Popup",
+        content: ui.createStackLayout({
+            children: [
+                ui.createFrame({
+                    heightRequest: 50,
+                    cornerRadius: 10,
+                    content: ui.createLabel({
+                        text: "Batteries Unlock from B-Power level.",
+                        horizontalOptions: LayoutOptions.CENTER,
+                        verticalOptions: LayoutOptions.CENTER
+                    })
+                }),
+                ui.createLabel({text: "I showse batteries now."}),
+                ui.createGrid({
+                    columnDefinitions: ["15*", "30*"],
+                    rowDefinitions: ["auto"],
+                    children: [
+                        createButtonSpecial("Battery 1", 0, 0, battery1.show(), true),
+                        createButtonSpecial("Battery 2", 1, 0, battery2.show(), true),
+                        createButtonSpecial("Battery 3", 0, 1, battery3.show(), true),
+                        createButtonSpecial("Battery 4", 1, 1, battery4.show(), true),
+                    ]
+                }),
+                ui.createButton({text: "Close", onClicked: () => popup.hide()})
+            ]
+        })
+    });
+
+    var battery1 = ui.createPopup({
+        title: "Battery 1",
+        content: ui.createStackLayout({
+            children: [
+                ui.createFrame({
+                    heightRequest: 50,
+                    cornerRadius: 10,
+                    content: ui.createLabel({
+                        text: "Currently:" + basicLocked1 + " | Currently:" + basicEffect1,
+                        horizontalOptions: LayoutOptions.CENTER,
+                        verticalOptions: LayoutOptions.CENTER
+                    })
+                }),
+                ui.createLabel({text: "Effect:"}),
+                ui.createLatexLabel({text: "EFFECT IS MULITIPLER $A_1 \\times 2$ INSTANCES."}),
+                ui.createButton({text: "Close", onClicked: () => popup.hide()})
+            ]
+        })
+    });
+
+    var battery2 = ui.createPopup({
+        title: "Battery 2",
+        content: ui.createStackLayout({
+            children: [
+                ui.createFrame({
+                    heightRequest: 50,
+                    cornerRadius: 10,
+                    content: ui.createLabel({
+                        text: "Currently:" + basicLocked1 + " | Currently:" + basicEffect1,
+                        horizontalOptions: LayoutOptions.CENTER,
+                        verticalOptions: LayoutOptions.CENTER
+                    })
+                }),
+                ui.createLabel({text: "Effect:"}),
+                ui.createLatexLabel({text: "EFFECT IS MULITIPLER $A_2 \\times 2$ INSTANCES."}),
+                ui.createButton({text: "Close", onClicked: () => popup.hide()})
+            ]
+        })
+    });
+
+    var battery3 = ui.createPopup({
+        title: "Battery 3",
+        content: ui.createStackLayout({
+            children: [
+                ui.createFrame({
+                    heightRequest: 50,
+                    cornerRadius: 10,
+                    content: ui.createLabel({
+                        text: "Currently:" + basicLocked1 + " | Currently:" + basicEffect1,
+                        horizontalOptions: LayoutOptions.CENTER,
+                        verticalOptions: LayoutOptions.CENTER
+                    })
+                }),
+                ui.createLabel({text: "Effect:"}),
+                ui.createLatexLabel({text: "EFFECT IS MULITIPLER $A_2 \\times 2$ INSTANCES."}),
+                ui.createButton({text: "Close", onClicked: () => popup.hide()})
+            ]
+        })
+    });
+
+    var battery4 = ui.createPopup({
+        title: "Battery 4",
+        content: ui.createStackLayout({
+            children: [
+                ui.createFrame({
+                    heightRequest: 50,
+                    cornerRadius: 10,
+                    content: ui.createLabel({
+                        text: "Currently:" + basicLocked1 + " | Currently:" + basicEffect1,
+                        horizontalOptions: LayoutOptions.CENTER,
+                        verticalOptions: LayoutOptions.CENTER
+                    })
+                }),
+                ui.createLabel({text: "Effect:"}),
+                ui.createLatexLabel({text: "EFFECT IS MULITIPLER $A_1 \\times 2$ INSTANCES."}),
+                ui.createButton({text: "Close", onClicked: () => popup.hide()})
+            ]
+        })
+    });
 }
 
 var updateAvailability = () => {
@@ -218,6 +360,7 @@ var tick = (elapsedTime, multiplier) => {
     let bonus = theory.publicationMultiplier;
     currency2.value += dt
     currency.value += dt * bonus * currency2.value.pow(getTExponent(tLol.level)) * getAPow(aPow.level).pow(2) * getAFac(aFactor.level).pow(getA2Exponent(a2Exp.level)) * getAFac2(aFactor2.level).pow(getA3Exponent(a3Exp.level)) * BigNumber.THREE.pow(getBPow(bPow.level))
+    basicLockedAva1 = bPow.level > 4
 }
 
 var getPrimaryEquation = () => {
