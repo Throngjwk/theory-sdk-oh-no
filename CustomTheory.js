@@ -159,6 +159,16 @@ var init = () => {
         };
     }
 
+    {
+        a3Exp = theory.createMilestoneUpgrade(5, 12);
+        a3Exp.description = Localization.getUpgradeIncCustomExpDesc("A_3", "0.05");
+        a3Exp.info = Localization.getUpgradeIncCustomExpInfo("A_3", "0.05");
+        a3Exp.boughtOrRefunded = (_) => {
+            updateAvailability();
+             theory.invalidatePrimaryEquation();
+        };
+    }
+
     /////////////////
     //// Achievements
     //All 7 Achievements
@@ -179,13 +189,14 @@ var updateAvailability = () => {
     aFactor2.isAvailable = aFacTerm2.level > 0
     bPowTerm.isAvailable = aFacTerm2.level > 0
     bPow.isAvailable = bPowTerm.level > 0
+    a3Exp.isAvailable = bPowTerm.level > 0
 }
 
 var tick = (elapsedTime, multiplier) => {
     let dt = BigNumber.from(elapsedTime * multiplier);
     let bonus = theory.publicationMultiplier;
     currency2.value += dt
-    currency.value += dt * bonus * currency2.value.pow(getTExponent(tLol.level)) * getAPow(aPow.level).pow(2) * getAFac(aFactor.level).pow(getA2Exponent(a2Exp.level)) * getAFac2(aFactor2.level) * BigNumber.THREE.pow(getBPow(bPow.level))
+    currency.value += dt * bonus * currency2.value.pow(getTExponent(tLol.level)) * getAPow(aPow.level).pow(2) * getAFac(aFactor.level).pow(getA2Exponent(a2Exp.level)) * getAFac2(aFactor2.level).pow(getA3Exponent(a3Exp.level)) * BigNumber.THREE.pow(getBPow(bPow.level))
 }
 
 var getPrimaryEquation = () => {
@@ -200,6 +211,19 @@ var getPrimaryEquation = () => {
     if (a2Exp.level == 1) result += "^{1.2}";
 
     if (aFacTerm2.level == 1) result += " \\times A_3";
+
+    if (a3Exp.level == 1) result += "^{1.05}";
+    if (a3Exp.level == 2) result += "^{1.1}";
+    if (a3Exp.level == 3) result += "^{1.15}";
+    if (a3Exp.level == 4) result += "^{1.2}";
+    if (a3Exp.level == 5) result += "^{1.25}";
+    if (a3Exp.level == 6) result += "^{1.3}";
+    if (a3Exp.level == 7) result += "^{1.35}";
+    if (a3Exp.level == 8) result += "^{1.4}";
+    if (a3Exp.level == 9) result += "^{1.45}";
+    if (a3Exp.level == 10) result += "^{1.5}";
+    if (a3Exp.level == 11) result += "^{1.55}";
+    if (a3Exp.level == 12) result += "^{1.6}";
 
     if (bPowTerm.level == 1) result += " \\times 3^{B_1}";
 
@@ -218,6 +242,7 @@ var getAFac2 = (level) => BigNumber.from(1 + 2 * level)
 var getBPow = (level) => BigNumber.from(level)
 var getTExponent = (level) => BigNumber.from(1 + level)
 var getA2Exponent = (level) => BigNumber.from(1 + 0.2 * level)
+var getA3Exponent = (level) => BigNumber.from(1 + 0.05 * level)
 
 
 init();
