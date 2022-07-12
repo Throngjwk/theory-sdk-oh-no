@@ -289,6 +289,86 @@ var init = () => {
         }
     }
 
+    var battery1 = ui.createPopup({
+        title: "Battery 1",
+        content: ui.createStackLayout({
+            children: [
+                ui.createFrame({
+                    heightRequest: 50,
+                    cornerRadius: 10,
+                    content: ui.createLabel({
+                        text: "Currently:" + basicLocked1 + " | Currently:" + basicEffect1,
+                        horizontalOptions: LayoutOptions.CENTER,
+                        verticalOptions: LayoutOptions.CENTER
+                    })
+                }),
+                ui.createLabel({text: "Effect:"}),
+                ui.createLatexLabel({text: "EFFECT IS MULITIPLER $A_1 \\times 2$ INSTANCES."}),
+                ui.createButton({text: "Close", onClicked: () => popup.hide()})
+            ]
+        })
+    });
+
+    var battery2 = ui.createPopup({
+        title: "Battery 2",
+        content: ui.createStackLayout({
+            children: [
+                ui.createFrame({
+                    heightRequest: 50,
+                    cornerRadius: 10,
+                    content: ui.createLabel({
+                        text: "Currently:" + basicLocked2 + " | Currently:" + basicEffect2,
+                        horizontalOptions: LayoutOptions.CENTER,
+                        verticalOptions: LayoutOptions.CENTER
+                    })
+                }),
+                ui.createLabel({text: "Effect:"}),
+                ui.createLatexLabel({text: "EFFECT IS MULITIPLER $A_2 \\times 2$ INSTANCES."}),
+                ui.createButton({text: "Close", onClicked: () => popup.hide()})
+            ]
+        })
+    });
+
+    var battery3 = ui.createPopup({
+        title: "Battery 3",
+        content: ui.createStackLayout({
+            children: [
+                ui.createFrame({
+                    heightRequest: 50,
+                    cornerRadius: 10,
+                    content: ui.createLabel({
+                        text: "Currently:" + basicLocked3 + " | Currently:" + basicEffect3,
+                        horizontalOptions: LayoutOptions.CENTER,
+                        verticalOptions: LayoutOptions.CENTER
+                    })
+                }),
+                ui.createLabel({text: "Effect:"}),
+                ui.createLatexLabel({text: "EFFECT IS MULITIPLER $A_2 \\times 2$ INSTANCES."}),
+                ui.createButton({text: "Close", onClicked: () => popup.hide()})
+            ]
+        })
+    });
+
+    var battery4 = ui.createPopup({
+        title: "Battery 4",
+        content: ui.createStackLayout({
+            children: [
+                ui.createFrame({
+                    heightRequest: 50,
+                    cornerRadius: 10,
+                    content: ui.createLabel({
+                        text: "Currently:" + basicLocked4 + " | Currently:" + basicEffect4,
+                        horizontalOptions: LayoutOptions.CENTER,
+                        verticalOptions: LayoutOptions.CENTER
+                    })
+                }),
+                ui.createLabel({text: "Effect:"}),
+                ui.createLatexLabel({text: "EFFECT IS MULITIPLER $A_2 \\times 2$ INSTANCES."}),
+                ui.createButton({text: "Close", onClicked: () => popup.hide()})
+            ]
+        })
+    });
+
     var popup = ui.createPopup({
         title: "My Popup",
         content: ui.createStackLayout({
@@ -318,7 +398,7 @@ var init = () => {
         })
     });
 
-    var battery1 = ui.createPopup({
+    battery1 = ui.createPopup({
         title: "Battery 1",
         content: ui.createStackLayout({
             children: [
@@ -338,7 +418,7 @@ var init = () => {
         })
     });
 
-    var battery2 = ui.createPopup({
+     battery2 = ui.createPopup({
         title: "Battery 2",
         content: ui.createStackLayout({
             children: [
@@ -346,7 +426,7 @@ var init = () => {
                     heightRequest: 50,
                     cornerRadius: 10,
                     content: ui.createLabel({
-                        text: "Currently:" + basicLocked1 + " | Currently:" + basicEffect1,
+                        text: "Currently:" + basicLocked2 + " | Currently:" + basicEffect2,
                         horizontalOptions: LayoutOptions.CENTER,
                         verticalOptions: LayoutOptions.CENTER
                     })
@@ -358,7 +438,7 @@ var init = () => {
         })
     });
 
-    var battery3 = ui.createPopup({
+    battery3 = ui.createPopup({
         title: "Battery 3",
         content: ui.createStackLayout({
             children: [
@@ -366,7 +446,7 @@ var init = () => {
                     heightRequest: 50,
                     cornerRadius: 10,
                     content: ui.createLabel({
-                        text: "Currently:" + basicLocked1 + " | Currently:" + basicEffect1,
+                        text: "Currently:" + basicLocked3 + " | Currently:" + basicEffect3,
                         horizontalOptions: LayoutOptions.CENTER,
                         verticalOptions: LayoutOptions.CENTER
                     })
@@ -378,7 +458,7 @@ var init = () => {
         })
     });
 
-    var battery4 = ui.createPopup({
+    battery4 = ui.createPopup({
         title: "Battery 4",
         content: ui.createStackLayout({
             children: [
@@ -386,7 +466,7 @@ var init = () => {
                     heightRequest: 50,
                     cornerRadius: 10,
                     content: ui.createLabel({
-                        text: "Currently:" + basicLocked1 + " | Currently:" + basicEffect1,
+                        text: "Currently:" + basicLocked4 + " | Currently:" + basicEffect4,
                         horizontalOptions: LayoutOptions.CENTER,
                         verticalOptions: LayoutOptions.CENTER
                     })
