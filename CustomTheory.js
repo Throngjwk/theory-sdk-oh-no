@@ -23,21 +23,12 @@ var init = () => {
     ///////////////////
     // Regular Upgrades
 
-    // c1
+    // a
     {
-        let getDesc = (level) => "c_1=" + getC1(level).toString(0);
-        c1 = theory.createUpgrade(0, currency, new FirstFreeCost(new ExponentialCost(15, Math.log2(2))));
-        c1.getDescription = (_) => Utils.getMath(getDesc(c1.level));
-        c1.getInfo = (amount) => Utils.getMathTo(getDesc(c1.level), getDesc(c1.level + amount));
-    }
-
-    // c2
-    {
-        let getDesc = (level) => "c_2=2^{" + level + "}";
-        let getInfo = (level) => "c_2=" + getC2(level).toString(0);
-        c2 = theory.createUpgrade(1, currency, new ExponentialCost(5, Math.log2(10)));
-        c2.getDescription = (_) => Utils.getMath(getDesc(c2.level));
-        c2.getInfo = (amount) => Utils.getMathTo(getInfo(c2.level), getInfo(c2.level + amount));
+        let getDesc = (level) => "\\alpha=" + getA(level).toString(0);
+        a = theory.createUpgrade(0, currency, new FirstFreeCost(new ExponentialCost(5, Math.log2(3))));
+        a.getDescription = (_) => Utils.getMath(getDesc(a.level));
+        a.getInfo = (amount) => Utils.getMathTo(getDesc(a.level), getDesc(a.level + amount));
     }
 
     /////////////////////
@@ -48,22 +39,15 @@ var init = () => {
 
     ///////////////////////
     //// Milestone Upgrades
-    theory.setMilestoneCost(new LinearCost(25, 25));
+    theory.setMilestoneCost(new LinearCost(10, 5));
 
     {
-        c1Exp = theory.createMilestoneUpgrade(0, 3);
-        c1Exp.description = Localization.getUpgradeIncCustomExpDesc("c_1", "0.05");
-        c1Exp.info = Localization.getUpgradeIncCustomExpInfo("c_1", "0.05");
-        c1Exp.boughtOrRefunded = (_) => theory.invalidatePrimaryEquation();
+        aExp = theory.createMilestoneUpgrade(0, 3);
+        aExp.description = Localization.getUpgradeIncCustomExpDesc("\\alpha", "0.05");
+        aExp.info = Localization.getUpgradeIncCustomExpInfo("\\alpha", "0.05");
+        aExp.boughtOrRefunded = (_) => theory.invalidatePrimaryEquation();
     }
 
-    {
-        c2Exp = theory.createMilestoneUpgrade(1, 3);
-        c2Exp.description = Localization.getUpgradeIncCustomExpDesc("c_2", "0.05");
-        c2Exp.info = Localization.getUpgradeIncCustomExpInfo("c_2", "0.05");
-        c2Exp.boughtOrRefunded = (_) => theory.invalidatePrimaryEquation();
-    }
-    
     /////////////////
     //// Achievements
     achievement1 = theory.createAchievement(0, "Achievement 1", "Description 1", () => c1.level > 1);
