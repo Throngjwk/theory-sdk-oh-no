@@ -85,6 +85,17 @@ var init = () => {
         bPow.getInfo = (amount) => Utils.getMathTo(getDesc(bPow.level), getDesc(bPow.level + amount));
     }
 
+    // battery
+    {
+        battery = theory.createUpgrade(4, currency, new FreeCost());
+        battery.getDescription = (_) => "Open Battery Menu";
+        battery.getInfo = (amount) => "Open Battery Menu";
+        battery.boughtOrRefunded = (_) => {
+            psPUP.show();
+            battery.level = 0;
+        }
+    }
+
     /////////////////////
     // Permanent Upgrades
     theory.createPublicationUpgrade(0, currency, 1e5);
