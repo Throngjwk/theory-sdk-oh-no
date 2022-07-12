@@ -80,7 +80,7 @@ var init = () => {
     // bPow
     {
         let getDesc = (level) => "B_1=" + getBPow(level).toString(0);
-        bPow = theory.createUpgrade(0, currency, new FirstFreeCost(new ExponentialCost(1e20, Math.log2(32768))));
+        bPow = theory.createUpgrade(3, currency, new FirstFreeCost(new ExponentialCost(1e20, Math.log2(32768))));
         bPow.getDescription = (_) => Utils.getMath(getDesc(bPow.level));
         bPow.getInfo = (amount) => Utils.getMathTo(getDesc(bPow.level), getDesc(bPow.level + amount));
     }
